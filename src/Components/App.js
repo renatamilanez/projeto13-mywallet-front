@@ -42,7 +42,7 @@ export default function App(){
                                     <Expenses />
                                 </PrivatePage>
                             }/>
-                </Routes>
+                </Routes>x
             </BrowserRouter>
         </UserContext.Provider>
     )

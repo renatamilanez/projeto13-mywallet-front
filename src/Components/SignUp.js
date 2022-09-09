@@ -1,16 +1,42 @@
 import styled from 'styled-components';
-import {Link} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
+import { useContext } from 'react';
+import UserContext from '../contexts/UserContext';
+import axios from 'axios';
 
 export default function SignUp(){
+    const {email, setEmail, password, setPassword, name, setName, password2, setPassword2} = useContext(UserContext);
+    const navigate = useNavigate();
+    let signData = {
+        name,
+        email,
+        password,
+        password2
+    }
+
+    function handleForm(e){
+        e.preventDefault();
+        const promise = axios.post('https://localhost:5000/myWallet/users/sign-up', signData);
+        promise.then(res => {
+            navigate('/');
+            setName('');
+            setEmail('');
+            setPassword('');
+            setPassword2('');
+        });
+        promise.catch(res => {
+            alert('Faça o cadastro novamente');
+        });
+    }
 
     return(
         <Container>
             <Logo>MyWallet</Logo>
-            <Form>
-                <Input placeholder='Nome'></Input>
-                <Input placeholder='Email' type='email' name='email' required ></Input>
-                <Input placeholder='Senha' type='password' name='password' required></Input>
-                <Input placeholder='Confirme a senha' type='password' name='password' required></Input>
+            <Form onSubmit={handleForm}>
+                <Input placeholder='Nome' type='text' name='name' required onChange={(e) => setName(e.target.value)} value={name}></Input>
+                <Input placeholder='Email' type='email' name='email' required onChange={(e) => setEmail(e.target.value)} value={email}></Input>
+                <Input placeholder='Senha' type='password' name='password' required onChange={(e) => setPassword(e.target.value)} value={password}></Input>
+                <Input placeholder='Confirme a senha' type='password' name='password' required onChange={(e) => setPassword2(e.target.value)} value={password2}></Input>
                 <Button>Cadastrar</Button>
             </Form>
             <Link to='/'>

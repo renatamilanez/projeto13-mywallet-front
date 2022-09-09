@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import {Link, useNavigate} from 'react-router-dom';
 import {useContext} from 'react';
 import UserContext from '../contexts/UserContext';
+import axios from 'axios';
 
 export default function SignIn(){
     const {email, setEmail, password, setPassword} = useContext(UserContext);
@@ -16,8 +17,9 @@ export default function SignIn(){
 
     function handleForm(e){
         e.preventDefault();
-        const promise = axios.post('http://localhost:5000/myWallet/users', loginData);
+        const promise = axios.post('https://localhost:5000/myWallet/users/sign-in', loginData);
         promise.then(res => {
+            console.log(res.data);
             localStorage.setItem('userToken', res.data.token);
             userToken = localStorage.getItem('userToken');
             navigate('/registros');
@@ -26,6 +28,7 @@ export default function SignIn(){
         });
 
         promise.catch(res => {
+            console.log(res.data);
             alert('Faça o login novamente');
         });
     }
@@ -34,8 +37,8 @@ export default function SignIn(){
         <Container>
             <Logo>MyWallet</Logo>
             <Form onSubmit={handleForm}>
-                <Input placeholder='E-mail' type='email' name='email' ></Input>
-                <Input placeholder='Senha' type='password' name='password' required></Input>
+                <Input placeholder='E-mail' type='email' name='email' required onChange={(e) => setEmail(e.target.value)} value={email}></Input>
+                <Input placeholder='Senha' type='password' name='password' required onChange={(e) => setPassword(e.target.value)} value={password}></Input>
                 <Button>Entrar</Button>
             </Form>
             <Link to='/cadastro'>
