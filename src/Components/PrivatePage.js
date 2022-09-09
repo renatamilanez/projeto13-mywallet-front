@@ -1,10 +1,12 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import {useContext} from 'react';
+import UserContext from '../contexts/UserContext';
 
 export default function PrivatePage({children}){
-    const auth = localStorage.getItem('userToken');
+    const {token} = useContext(UserContext);
 
-    if(auth){
+    if(token !== '' && token !== undefined && token !== null){
         return(
             <>
                 {children}

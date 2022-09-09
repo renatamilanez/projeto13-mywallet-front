@@ -1,16 +1,43 @@
 import styled from 'styled-components';
+import {useContext} from 'react';
+import UserContext from '../contexts/UserContext';
+import axios from 'axios';
+import {Link, useNavigate} from 'react-router-dom';
 
 export default function Incomes(){
+    const {amount, setAmount, description, setDescription, config } = useContext(UserContext);
+    const navigate = useNavigate();
+    
+    async function handleForm(e){
+        e.preventDefault();
+        const newIncome = {
+            value: amount,
+            description,
+            type: "positive"
+        }
+
+        try {
+            await axios.post('http://localhost:4000/records', newIncome, config);
+            console.log('enviou para api');
+            navigate('/registros');
+            setAmount('');
+            setDescription('');
+        } catch (error) {
+            console.log(error);
+            alert('Favor preencher corretamente');
+        }
+    }
+
     return(
         <Container>
             <Title>Nova entrada</Title>
-            <Form>
-                <Input placeholder='Valor'></Input>
-                <Input placeholder='Descrição'></Input>
+            <Form onSubmit={handleForm}>
+                <Input placeholder='Valor' type='number' required onChange={(e) => {setAmount(e.target.value)}} value={amount}></Input>
+                <Input placeholder='Descrição' type='text' required onChange={(e) => setDescription(e.target.value)} value={description}></Input>
                 <Button>Salvar entrada</Button>
             </Form>
         </Container>
-    )
+    );
 }
 
 const Container = styled.div`

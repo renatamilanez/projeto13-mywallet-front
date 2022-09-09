@@ -2,30 +2,58 @@ import styled from 'styled-components';
 import {IoIosAddCircleOutline} from 'react-icons/io';
 import {IoRemoveCircleOutline} from 'react-icons/io5';
 import {IoExitOutline} from 'react-icons/io5';
+import { Link, useNavigate } from 'react-router-dom';
+import {useContext, useEffect} from 'react';
+import UserContext from '../contexts/UserContext';
+import axios from 'axios';
+import Record from "../Components/Record.js"
 
 export default function Records(){
+    const {name, config, records, setRecords} = useContext(UserContext);
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        const promise = axios.get('http://localhost:4000/records', config);
+        promise.then(res => {
+            setRecords(res.data);
+        });
+    }, []);
+
+    function returnHome(){
+        localStorage.removeItem('userToken');
+        navigate('/');
+    }
+
     return(
         <Container>
             <Welcome>
-                <Hello>Olá, fulano</Hello>
-                <Icons>
-                    <IoExitOutline />
-                </Icons>
+                <Hello>Olá, {name}</Hello>            
+                    <Icons>
+                        <IoExitOutline onClick={returnHome}/>
+                    </Icons>
             </Welcome>
-            <Register>
-                <Text>Não há registros de<br/>entrada ou saída</Text>
-            </Register>
+                {records === null || records.length === 0 ? (
+                    <Register>
+                        <Text>Não há registros de<br/>entrada ou saída</Text>
+                    </Register>
+                ) : (
+                        <Record />
+            )}
             <Buttons>
                 <Button>
-                    <Icons>
-                        <IoIosAddCircleOutline/>
-                    </Icons>
+                    <Link to='/entrada'>
+                        <Icons>
+                            <IoIosAddCircleOutline/>
+                        </Icons>
+                    </Link>
                     <h6>Nova<br/>entrada</h6>
                 </Button>
                 <Button>
-                    <Icons>
-                        <IoRemoveCircleOutline/>
-                    </Icons>
+                    <Link to='/saida'>
+                        <Icons>
+                            <IoRemoveCircleOutline/>
+                        </Icons>
+                    </Link>
                     <h6>Nova<br/>saída</h6>
                 </Button>
             </Buttons>
@@ -61,7 +89,7 @@ const Hello = styled.h3`
 
 const Register = styled.div`
     width: 90vw;
-    height: calc(100% - 250px);
+    height: calc(100vh - 250px);
     background-color: #ffffff;
     color: #868686;
     font-size: 20px;

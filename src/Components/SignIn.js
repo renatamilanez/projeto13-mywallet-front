@@ -5,19 +5,19 @@ import UserContext from '../contexts/UserContext';
 import axios from 'axios';
 
 export default function SignIn(){
-    const {email, setEmail, password, setPassword} = useContext(UserContext);
+    let {email, setEmail, password, setPassword, token, setToken} = useContext(UserContext);
     let userToken = '';
     
     const navigate = useNavigate();
     
-    let loginData = {
+    const loginData = {
         email,
         password
     }
 
     function handleForm(e){
         e.preventDefault();
-        const promise = axios.post('https://localhost:5000/myWallet/users/sign-in', loginData);
+        const promise = axios.post('http://localhost:4000/sign-in', loginData);
         promise.then(res => {
             console.log(res.data);
             localStorage.setItem('userToken', res.data.token);
@@ -28,7 +28,6 @@ export default function SignIn(){
         });
 
         promise.catch(res => {
-            console.log(res.data);
             alert('Faça o login novamente');
         });
     }

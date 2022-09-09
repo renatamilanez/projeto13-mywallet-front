@@ -14,10 +14,20 @@ export default function App(){
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [name, setName] = useState('');
-    const [password2, setPassword2] = useState('');
+    const [repeatPassword, setRepeatPassword] = useState('');
+    const [amount, setAmount] = useState('');
+    const [description, setDescription] = useState('');
+    const [records, setRecords] = useState([]);
+    const token = localStorage.getItem('userToken');
+    
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`
+        },
+    }
 
     const contextValue = {
-        email, setEmail, password, setPassword, name, setName, password2, setPassword2 
+        email, setEmail, password, setPassword, name, setName, repeatPassword, setRepeatPassword, records, setRecords, token, config, amount, setAmount, description, setDescription
     };
 
     return(
@@ -27,22 +37,22 @@ export default function App(){
                 <Routes>
                     <Route path='/' element={<SignIn />}/>
                     <Route path='/cadastro' element={<SignUp />}/>
-                            <Route path='/registros' element={
+                    <Route path='/registros' element={
                                 <PrivatePage>
                                     <Records />
                                 </PrivatePage>
-                            }/>
-                            <Route path='/entrada' element={
+                    }/>
+                    <Route path='/entrada' element={
                                 <PrivatePage>
                                     <Incomes />
                                 </PrivatePage>
-                            }/>
-                            <Route path='/saida' element={
+                    }/>
+                    <Route path='/saida' element={
                                 <PrivatePage>
                                     <Expenses />
                                 </PrivatePage>
-                            }/>
-                </Routes>x
+                    }/>
+                </Routes>
             </BrowserRouter>
         </UserContext.Provider>
     )
