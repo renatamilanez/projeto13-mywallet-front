@@ -1,20 +1,45 @@
 import styled from 'styled-components';
-import {Link} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
+import {useContext} from 'react';
+import UserContext from '../contexts/UserContext';
 
-export default function SignInPage(){
+export default function SignIn(){
+    const {email, setEmail, password, setPassword} = useContext(UserContext);
+    let userToken = '';
+    
+    const navigate = useNavigate();
+    
+    let loginData = {
+        email,
+        password
+    }
+
+    function handleForm(e){
+        e.preventDefault();
+        const promise = axios.post('http://localhost:5000/myWallet/users', loginData);
+        promise.then(res => {
+            localStorage.setItem('userToken', res.data.token);
+            userToken = localStorage.getItem('userToken');
+            navigate('/registros');
+            setEmail('');
+            setPassword('');
+        });
+
+        promise.catch(res => {
+            alert('Faça o login novamente');
+        });
+    }
 
     return(
         <Container>
             <Logo>MyWallet</Logo>
-            <Form>
-                <Input placeholder='Nome'></Input>
-                <Input placeholder='Email' type='email' name='email' required ></Input>
+            <Form onSubmit={handleForm}>
+                <Input placeholder='E-mail' type='email' name='email' ></Input>
                 <Input placeholder='Senha' type='password' name='password' required></Input>
-                <Input placeholder='Confirme a senha' type='password' name='password' required></Input>
-                <Button>Cadastrar</Button>
+                <Button>Entrar</Button>
             </Form>
-            <Link to='/'>
-                <Title>Já tem uma conta? Entre agora!</Title>
+            <Link to='/cadastro'>
+                <Title>Primeira vez? Cadastre-se!</Title>
             </Link>
         </Container>
     )

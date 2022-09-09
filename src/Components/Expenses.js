@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export default function Output(){
+export default function Expenses(){
     return (
         <Container>
             <Title>Nova saída</Title>

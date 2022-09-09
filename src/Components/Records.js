@@ -3,29 +3,29 @@ import {IoIosAddCircleOutline} from 'react-icons/io';
 import {IoRemoveCircleOutline} from 'react-icons/io5';
 import {IoExitOutline} from 'react-icons/io5';
 
-export default function Home(){
+export default function Records(){
     return(
         <Container>
             <Welcome>
                 <Hello>Olá, fulano</Hello>
-                <Symbols>
+                <Icons>
                     <IoExitOutline />
-                </Symbols>
+                </Icons>
             </Welcome>
             <Register>
                 <Text>Não há registros de<br/>entrada ou saída</Text>
             </Register>
             <Buttons>
                 <Button>
-                    <Symbols>
+                    <Icons>
                         <IoIosAddCircleOutline/>
-                    </Symbols>
+                    </Icons>
                     <h6>Nova<br/>entrada</h6>
                 </Button>
                 <Button>
-                    <Symbols>
+                    <Icons>
                         <IoRemoveCircleOutline/>
-                    </Symbols>
+                    </Icons>
                     <h6>Nova<br/>saída</h6>
                 </Button>
             </Buttons>
@@ -33,9 +33,6 @@ export default function Home(){
     )
 }
 
-//<Register>
-//<Text>Não há registros de<br/>entrada ou saída</Text>
-//</Register>
 
 const Container = styled.div`
     width: 100%;
@@ -106,7 +103,7 @@ const Button = styled.div`
     border: 1px solid var(--color-button);
 `
 
-const Symbols = styled.div`
+const Icons = styled.div`
     color: #ffffff;
     font-size: 28px;
 `

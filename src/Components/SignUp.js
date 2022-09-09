@@ -1,21 +1,20 @@
 import styled from 'styled-components';
 import {Link} from 'react-router-dom';
-import {useContext} from 'react';
-import UserContext from '../contexts/UserContext';
 
-export default function LoginPage(){
-    const {email, setEmail} = useContext(UserContext);
+export default function SignUp(){
 
     return(
         <Container>
             <Logo>MyWallet</Logo>
             <Form>
-                <Input placeholder='E-mail' type='email' name='email' ></Input>
+                <Input placeholder='Nome'></Input>
+                <Input placeholder='Email' type='email' name='email' required ></Input>
                 <Input placeholder='Senha' type='password' name='password' required></Input>
-                <Button>Entrar</Button>
+                <Input placeholder='Confirme a senha' type='password' name='password' required></Input>
+                <Button>Cadastrar</Button>
             </Form>
-            <Link to='/cadastro'>
-                <Title>Primeira vez? Cadastre-se!</Title>
+            <Link to='/'>
+                <Title>Já tem uma conta? Entre agora!</Title>
             </Link>
         </Container>
     )

@@ -3,11 +3,12 @@ import {BrowserRouter, Routes, Route} from 'react-router-dom';
 import "../assets/css/reset.css";
 import GlobalStyle from "../assets/css/globalStyles";
 import {useState} from "react";
-import LoginPage from "./LoginPage";
-import SignInPage from "./SignInPage";
-import Home from "./Home";
+import SignIn from "./SignIn";
+import SignUp from "./SignUp";
+import Records from "./Records";
 import Incomes from "./Incomes";
-import Output from "./Output";
+import Expenses from "./Expenses";
+import PrivatePage from "./PrivatePage";
 
 export default function App(){
     const [email, setEmail] = useState('');
@@ -24,11 +25,23 @@ export default function App(){
             <GlobalStyle />
             <BrowserRouter>
                 <Routes>
-                    <Route path='/' element={<LoginPage />}/>
-                    <Route path='/cadastro' element={<SignInPage />}/>
-                    <Route path='/inicio' element={<Home />}></Route>
-                    <Route path='/entrada' element={<Incomes />}></Route>
-                    <Route path='/saida' element={<Output />}></Route>
+                    <Route path='/' element={<SignIn />}/>
+                    <Route path='/cadastro' element={<SignUp />}/>
+                            <Route path='/registros' element={
+                                <PrivatePage>
+                                    <Records />
+                                </PrivatePage>
+                            }/>
+                            <Route path='/entrada' element={
+                                <PrivatePage>
+                                    <Incomes />
+                                </PrivatePage>
+                            }/>
+                            <Route path='/saida' element={
+                                <PrivatePage>
+                                    <Expenses />
+                                </PrivatePage>
+                            }/>
                 </Routes>
             </BrowserRouter>
         </UserContext.Provider>
