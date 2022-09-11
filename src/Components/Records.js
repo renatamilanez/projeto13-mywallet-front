@@ -9,7 +9,7 @@ import axios from 'axios';
 import Record from "../Components/Record.js"
 
 export default function Records(){
-    const {name, config, records, setRecords} = useContext(UserContext);
+    const {name, config, records, setRecords, username} = useContext(UserContext);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -27,7 +27,7 @@ export default function Records(){
     return(
         <Container>
             <Welcome>
-                <Hello>Olá, {name}</Hello>            
+                <Hello>Olá, {username}</Hello>            
                     <Icons>
                         <IoExitOutline onClick={returnHome}/>
                     </Icons>

@@ -18,6 +18,7 @@ export default function App(){
     const [amount, setAmount] = useState('');
     const [description, setDescription] = useState('');
     const [records, setRecords] = useState([]);
+    const [username, setUsername] = useState('');
     const token = localStorage.getItem('userToken');
     
     const config = {
@@ -27,7 +28,7 @@ export default function App(){
     }
 
     const contextValue = {
-        email, setEmail, password, setPassword, name, setName, repeatPassword, setRepeatPassword, records, setRecords, token, config, amount, setAmount, description, setDescription
+        email, setEmail, password, setPassword, name, setName, repeatPassword, setRepeatPassword, records, setRecords, token, config, amount, setAmount, description, setDescription, username, setUsername
     };
 
     return(

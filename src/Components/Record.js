@@ -5,13 +5,14 @@ import UserContext from '../contexts/UserContext';
 export default function Record(){
     const {records} = useContext(UserContext);
     let balance = 0;
-    let positive = undefined;
 
     records.forEach(record => {
         if(record.type === 'positive'){
-            balance += record.value
+            balance = parseInt(balance) + parseInt(record.value);
+            balance = balance.toFixed(2);
         } if (record.type === 'negative'){
-            balance -= record.value
+            balance = parseInt(balance) - parseInt(record.value)
+            balance = balance.toFixed(2);
         }
     });
 
@@ -22,13 +23,13 @@ export default function Record(){
                     <Date>{record.date}</Date>
                     <AlignItem>
                         <Description>{record.description}</Description>
-                        <Value type={record.type}>{record.value}</Value>
+                        <Value type={record.type}>{parseInt(record.value).toFixed(2)}</Value>
                     </AlignItem>
                 </Item>
             ))}
                 <Overall>
                     <h6>SALDO</h6>
-                    <Balance>{balance}</Balance>
+                    <Balance balance={balance}>{balance}</Balance>
                 </Overall>
         </Register>
     );
@@ -51,11 +52,22 @@ const Date = styled.h6`
     margin-right: 12px;
 `
 
+const colors = {
+    negative: "#c70000",
+    positive: "#03ac00"
+}
+
 const Value = styled.h6`
     font-family: var(--font-body);
     font-weight: 400;
     font-size: 16px;
-    color: #c70000;
+    color: ${props => {
+        if(props.type === 'positive'){
+            return colors.positive;
+        } if (props.type === 'negative'){
+            return colors.negative;
+        }
+    }};
 `
 
 const Description = styled.h6`
@@ -102,9 +114,12 @@ const Overall = styled.div`
     bottom: 20px;
     left: 20px;
 `
-
 const Balance = styled.h6`
-    color: #000000;
+    font-weight: 400;
+    color: ${props => {
+        if(props.balance >= 0){
+            return colors.positive;
+        } if (props.balance < 0){
+            return colors.negative;
+        }}};
 `
-
-

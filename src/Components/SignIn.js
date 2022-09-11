@@ -5,7 +5,7 @@ import UserContext from '../contexts/UserContext';
 import axios from 'axios';
 
 export default function SignIn(){
-    let {email, setEmail, password, setPassword, token, setToken} = useContext(UserContext);
+    let {email, setEmail, password, setPassword, setUsername} = useContext(UserContext);
     let userToken = '';
     
     const navigate = useNavigate();
@@ -22,6 +22,7 @@ export default function SignIn(){
             console.log(res.data);
             localStorage.setItem('userToken', res.data.token);
             userToken = localStorage.getItem('userToken');
+            setUsername(res.data.username);
             navigate('/registros');
             setEmail('');
             setPassword('');
