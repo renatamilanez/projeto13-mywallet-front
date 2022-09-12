@@ -16,7 +16,7 @@ export default function SignUp(){
 
     function handleForm(e){
         e.preventDefault();
-        const promise = axios.post('http://localhost:4000/sign-up', signData);
+        const promise = axios.post('http://localhost:5000/sign-up', signData);
         promise.then(res => {
             navigate('/');
             setName('');

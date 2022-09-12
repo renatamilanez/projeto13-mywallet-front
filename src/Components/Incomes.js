@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import {useContext} from 'react';
 import UserContext from '../contexts/UserContext';
 import axios from 'axios';
-import {Link, useNavigate} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 
 export default function Incomes(){
     const {amount, setAmount, description, setDescription, config } = useContext(UserContext);
@@ -17,7 +17,7 @@ export default function Incomes(){
         }
 
         try {
-            await axios.post('http://localhost:4000/records', newIncome, config);
+            await axios.post('http://localhost:5000/records', newIncome, config);
             navigate('/registros');
             setAmount('');
             setDescription('');

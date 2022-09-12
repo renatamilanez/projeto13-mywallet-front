@@ -17,7 +17,7 @@ export default function Expenses(){
         }
 
         try {
-            await axios.post('http://localhost:4000/records', newIncome, config);
+            await axios.post('http://localhost:5000/records', newIncome, config);
             navigate('/registros');
             setAmount('');
             setDescription('');

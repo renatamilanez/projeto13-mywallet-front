@@ -13,7 +13,7 @@ export default function Records(){
     const navigate = useNavigate();
 
     useEffect(() => {
-        const promise = axios.get('http://localhost:4000/records', config);
+        const promise = axios.get('http://localhost:5000/records', config);
         promise.then(res => {
             setRecords(res.data);
         });
@@ -21,7 +21,7 @@ export default function Records(){
             navigate('/');
             alert('Você foi desconectado, faça o login novamente');
         })
-    }, [setRecords]);
+    }, []);
 
     function returnHome(){
         localStorage.removeItem('userToken');

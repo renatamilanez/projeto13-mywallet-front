@@ -22,8 +22,8 @@ export default function Record(){
     async function deleteRecord(record){
         if(window.confirm('Deseja deletar o item?')){
             try {
-                await axios.delete(`http://localhost:4000/delete/${record._id}`)
-                const promise = axios.get('http://localhost:4000/records', config);
+                await axios.delete(`http://localhost:5000/delete/${record._id}`)
+                const promise = axios.get('http://localhost:5000/records', config);
                 promise.then(res => {
                 setRecords(res.data);
         });
