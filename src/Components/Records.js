@@ -17,6 +17,10 @@ export default function Records(){
         promise.then(res => {
             setRecords(res.data);
         });
+        promise.catch(res => {
+            navigate('/');
+            alert('Você foi desconectado, faça o login novamente');
+        })
     }, []);
 
     function returnHome(){

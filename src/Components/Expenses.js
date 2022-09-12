@@ -18,12 +18,10 @@ export default function Expenses(){
 
         try {
             await axios.post('http://localhost:4000/records', newIncome, config);
-            console.log('enviou para api');
             navigate('/registros');
             setAmount('');
             setDescription('');
         } catch (error) {
-            console.log(error);
             alert('Favor preencher corretamente');
         }
     }

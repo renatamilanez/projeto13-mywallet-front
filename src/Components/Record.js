@@ -18,15 +18,17 @@ export default function Record(){
 
     return(
         <Register>
-            {records.map((record, index) => (
-                <Item index={index}>
-                    <Date>{record.date}</Date>
-                    <AlignItem>
-                        <Description>{record.description}</Description>
-                        <Value type={record.type}>{parseInt(record.value).toFixed(2)}</Value>
-                    </AlignItem>
-                </Item>
-            ))}
+            <Records>
+                {records.map((record, index) => (
+                    <Item index={index}>
+                        <Date>{record.date}</Date>
+                        <AlignItem>
+                            <Description>{record.description}</Description>
+                            <Value type={record.type}>{parseInt(record.value).toFixed(2)}</Value>
+                        </AlignItem>
+                    </Item>
+                ))}
+            </Records>
                 <Overall>
                     <h6>SALDO</h6>
                     <Balance balance={balance}>{balance}</Balance>
@@ -122,4 +124,10 @@ const Balance = styled.h6`
         } if (props.balance < 0){
             return colors.negative;
         }}};
+`
+
+const Records = styled.div`
+    width: 100%;
+    overflow-y: scroll;
+    margin-bottom: 40px;
 `

@@ -19,7 +19,6 @@ export default function SignIn(){
         e.preventDefault();
         const promise = axios.post('http://localhost:4000/sign-in', loginData);
         promise.then(res => {
-            console.log(res.data);
             localStorage.setItem('userToken', res.data.token);
             userToken = localStorage.getItem('userToken');
             setUsername(res.data.username);
