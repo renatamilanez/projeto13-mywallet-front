@@ -21,7 +21,7 @@ export default function Records(){
             navigate('/');
             alert('Você foi desconectado, faça o login novamente');
         })
-    }, []);
+    }, [setRecords]);
 
     function returnHome(){
         localStorage.removeItem('userToken');

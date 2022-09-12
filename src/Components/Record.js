@@ -1,9 +1,12 @@
 import styled from "styled-components";
 import { useContext } from 'react';
 import UserContext from '../contexts/UserContext';
+import axios from "axios";
+import { useNavigate } from 'react-router-dom';
 
 export default function Record(){
-    const {records} = useContext(UserContext);
+    const {records, setRecords, config} = useContext(UserContext);
+    const navigate = useNavigate();
     let balance = 0;
 
     records.forEach(record => {
@@ -16,6 +19,21 @@ export default function Record(){
         }
     });
 
+    async function deleteRecord(record){
+        if(window.confirm('Deseja deletar o item?')){
+            try {
+                await axios.delete(`http://localhost:4000/delete/${record._id}`)
+                const promise = axios.get('http://localhost:4000/records', config);
+                promise.then(res => {
+                setRecords(res.data);
+        });
+            } catch (error) {
+                navigate('/');
+                alert('Você foi desconectado, faça o login novamente');
+            }
+        }
+    }
+
     return(
         <Register>
             <Records>
@@ -26,6 +44,7 @@ export default function Record(){
                             <Description>{record.description}</Description>
                             <Value type={record.type}>{parseInt(record.value).toFixed(2)}</Value>
                         </AlignItem>
+                        <Delete onClick={() => deleteRecord(record)}>x</Delete>
                     </Item>
                 ))}
             </Records>
@@ -130,4 +149,13 @@ const Records = styled.div`
     width: 100%;
     overflow-y: scroll;
     margin-bottom: 40px;
+`
+
+const Delete = styled.h6`
+    font-family: var(--font-body);
+    font-weight: 400;
+    font-size: 16px;
+    color: #c6c6c6;
+    margin-left: 12px;
+    cursor: pointer;
 `
